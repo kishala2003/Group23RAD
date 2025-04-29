@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ content.title }}{% endblock %}
+
+{% block content %}
+<section class="content-detail">
+    <div class="content-info">
+        <h1>{{ content.title }}</h1>
+        <p>{{ content.description }}</p>
+        <div class="content-meta">
+            <span class="year">{{ content.release_year }}</span>
+            <span class="rating"><i class="fas fa-star"></i> {{ content.rating }}</span>
+            <span class="genre">{{ content.genre }}</span>
+        </div>
+        <a href="#" class="btn btn-primary btn-play">Watch Now</a>
+    </div>
+    <div class="content-image">
+        <img src="{{ url_for('static', filename='images/' + content.image_file) }}" alt="{{ content.title }}">
+    </div>
+</section>
+
+<section class="content-section similar-content">
+    <h2 class="section-title">You May Also Like</h2>
+    <div class="content-grid">
+        {% for similar in similar_contents %}
+        <div class="content-card">
+            <a href="{{ url_for('content_detail', content_id=similar.id) }}">
+                <img src="{{ url_for('static', filename='images/' + similar.image_file) }}" alt="{{ similar.title }}">
+                <div class="content-info">
+                    <h3>{{ similar.title }}</h3>
+                    <div class="content-meta">
+                        <span class="year">{{ similar.release_year }}</span>
+                        <span class="rating"><i class="fas fa-star"></i> {{ similar.rating }}</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

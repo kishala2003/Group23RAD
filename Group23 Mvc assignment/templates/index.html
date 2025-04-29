@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-content">
+        <h1>Unlimited movies, TV shows, and more.</h1>
+        <p>Watch anywhere. Cancel anytime.</p>
+        <a href="{{ url_for('register') }}" class="btn btn-primary btn-large">Get Started</a>
+    </div>
+</section>
+
+<section id="featured" class="content-section">
+    <h2 class="section-title">Featured Content</h2>
+    <div class="content-slider horizontal-scroll">
+        {% for content in movies[:5] + series[:5] + animations[:3] %}
+        <div class="content-card featured scroll-card">
+            <a href="{{ url_for('content_detail', content_id=content.id) }}">
+                <img src="{{ url_for('static', filename='images/' + content.image_file) }}" alt="{{ content.title }}">
+                <div class="content-info">
+                    <h3>{{ content.title }}</h3>
+                    <div class="content-meta">
+                        <span class="year">{{ content.release_year }}</span>
+                        <span class="rating"><i class="fas fa-star"></i> {{ content.rating }}</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section id="movies" class="content-section">
+    <h2 class="section-title">Movies</h2>
+    <div class="content-slider horizontal-scroll">
+        {% for movie in movies %}
+        <div class="content-card movies scroll-card">
+            <a href="{{ url_for('content_detail', content_id=movie.id) }}">
+                <img src="{{ url_for('static', filename='images/' + movie.image_file) }}" alt="{{ movie.title }}">
+                <div class="content-info">
+                    <h3>{{ movie.title }}</h3>
+                    <div class="content-meta">
+                        <span class="year">{{ movie.release_year }}</span>
+                        <span class="rating"><i class="fas fa-star"></i> {{ movie.rating }}</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section id="series" class="content-section">
+    <h2 class="section-title">TV Series</h2>
+    <div class="content-slider horizontal-scroll">
+        {% for show in series %}
+        <div class="content-card series scroll-card">
+            <a href="{{ url_for('content_detail', content_id=show.id) }}">
+                <img src="{{ url_for('static', filename='images/' + show.image_file) }}" alt="{{ show.title }}">
+                <div class="content-info">
+                    <h3>{{ show.title }}</h3>
+                    <div class="content-meta">
+                        <span class="year">{{ show.release_year }}</span>
+                        <span class="rating"><i class="fas fa-star"></i> {{ show.rating }}</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section id="animations" class="content-section">
+    <h2 class="section-title">Animations</h2>
+    <div class="content-slider horizontal-scroll">
+        {% for animation in animations %}
+        <div class="content-card animations scroll-card">
+            <a href="{{ url_for('content_detail', content_id=animation.id) }}">
+                <img src="{{ url_for('static', filename='images/' + animation.image_file) }}" alt="{{ animation.title }}">
+                <div class="content-info">
+                    <h3>{{ animation.title }}</h3>
+                    <div class="content-meta">
+                        <span class="year">{{ animation.release_year }}</span>
+                        <span class="rating"><i class="fas fa-star"></i> {{ animation.rating }}</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+<link rel="shortcut icon" href="#" />
+
+
+{% endblock %}
