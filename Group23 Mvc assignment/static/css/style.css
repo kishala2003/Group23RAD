@@ -34,7 +34,7 @@ ul {
 /* Header and Navigation */
 header {
     background-color: rgba(0, 0, 0, 0.8);
-    padding: 1rem 2rem;
+    padding: 1rem 0.9rem;
     position: fixed;
     top: 0;
     left: 0;
@@ -244,7 +244,7 @@ main {
     padding-left: 2rem;
 }
 
-/* Content Cards */
+* Content Cards */
 .content-card {
     position: relative;
     border-radius: 4px;
@@ -279,7 +279,7 @@ main {
 .content-meta {
     display: flex;
     gap: 1rem;
-    font-size: 0.8rem;
+    font-size: 1rem;
     color: var(--gray-color);
 }
 
@@ -623,7 +623,7 @@ footer {
 }
 
 .scroll-card img {
-    width: 200px;  /* Adjust image width */
+    width: 215px;  /* Adjust image width */
     height: 300px; /* Adjust image height */
     object-fit: cover;
     border-radius: 10px;
