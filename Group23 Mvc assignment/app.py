@@ -44,10 +44,10 @@ def index():
         ).all()
     else:
         # Original query to display all content
+       
         movies = Content.query.filter_by(content_type='movie').all()
         series = Content.query.filter_by(content_type='series').all()
         animations = Content.query.filter_by(content_type='animation').all()
-     
 
          # Add the debugging code right here
     print(f"Number of movies loaded: {len(movies)}")
@@ -493,7 +493,7 @@ def initialize_db():
                 Content(
                     title="Dark",
                     description="Four interconnected families uncover a time travel conspiracy spanning several generations in a small German town.",
-                    image_file="dark.jpg",
+                    image_file="dark.1.jpg",
                     content_type="series",
                     genre="Sci-Fi",
                     release_year=2017,
