@@ -25,6 +25,10 @@ class User(db.Model):
     def __repr__(self):
         return f"<User {self.username}>"
 
+    # ... existing fields ...
+    watch_later = db.relationship('WatchLater', backref='user', lazy=True)
+    # ...    
+
 
 class Content(db.Model):
     __tablename__ = 'contents'
@@ -44,6 +48,12 @@ class Content(db.Model):
     def __repr__(self):
         return f"<Content {self.title}>"
 
+    # ... existing fields ...
+    watch_later = db.relationship('WatchLater', backref='content', lazy=True)
+    # ...
+
+
+    
 
 class Favorite(db.Model):
     __tablename__ = 'favorites'
@@ -55,3 +65,14 @@ class Favorite(db.Model):
     
     def __repr__(self):
         return f"<Favorite {self.user_id}:{self.content_id}>"
+    
+
+class WatchLater(db.Model):
+    __tablename__ = 'watch_later'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    content_id = db.Column(db.Integer, db.ForeignKey('contents.id'), nullable=False)
+    added_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def __repr__(self):
+        return f"<WatchLater {self.user_id}:{self.content_id}>"
