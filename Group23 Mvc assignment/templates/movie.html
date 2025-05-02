@@ -3,7 +3,7 @@
 {% block title %}{{ content.title }}{% endblock %}
 
 {% block content %}
-<section class="content-detail">
+<div class="content-detail">
     <div class="content-info">
         <h1>{{ content.title }}</h1>
         <p>{{ content.description }}</p>
@@ -13,6 +13,31 @@
             <span class="genre">{{ content.genre }}</span>
         </div>
         <a href="#" class="btn btn-primary btn-play">Watch Now</a>
+        
+                {% if session.get('user_id') %}
+                <form action="{{ url_for('add_favorite', content_id=content.id) }}" method="POST" style="margin-top: 10px;">
+                    <button type="submit" class="btn btn-secondary" aria-label="Add to Favorites">
+                        <i class="fas fa-heart"></i> Add to Favorites
+                    </button>
+                </form>
+                {% else %}
+                <p><a href="{{ url_for('login') }}">Log in</a> to add to your favorites.</p>
+                {% endif %}
+            </div>
+
+                {% if session.get('user_id') %}
+                <form action="{{ url_for('add_watch_later', content_id=content.id) }}" method="POST" style="margin-top: 10px;">
+                     <button type="submit" class="btn btn-secondary" aria-label="Add to Watch Later">
+                        <i class="fas fa-clock"></i> Watch Later
+                    </button>
+                </form>
+                {% else %}
+                <p><a href="{{ url_for('login') }}">Log in</a> to add to your Watch Later list.</p>
+                {% endif %}
+            </div>
+
+        </section>
+        
     </div>
     <div class="content-image">
         <img src="{{ url_for('static', filename='images/' + content.image_file) }}" alt="{{ content.title }}">
