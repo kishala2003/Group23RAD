@@ -49,5 +49,37 @@
             {% endif %}
         </div>
     </div>
+
+
+    <div class="profile-content">
+        <h2>Watch Later</h2>
+        {% set watch_later = user.watch_later %}
+        {% if watch_later %}
+        <div class="content-grid">
+            {% for item in watch_later %}
+            <div class="content-card">
+                <a href="{{ url_for('content_detail', content_id=item.content.id) }}">
+                    <img src="{{ url_for('static', filename='images/' + item.content.image_file) }}" alt="{{ item.content.title }}">
+                    <div class="content-info">
+                        <h3>{{ item.content.title }}</h3>
+                        <div class="content-meta">
+                            <span class="year">{{ item.content.release_year }}</span>
+                            <span class="rating"><i class="fas fa-star"></i> {{ item.content.rating }}</span>
+                        </div>
+                    </div>
+                </a>
+                <form action="{{ url_for('remove_watch_later', content_id=item.content.id) }}" method="POST">
+                    <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <p>You haven't added anything to Watch Later yet.</p>
+        </div>
+        {% endif %}
+    </div>
+    
 </section>
 {% endblock %}
