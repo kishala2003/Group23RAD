@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_migrate import Migrate
-from models import db, User, Content, Favorite
+from models import db, User, Content, Favorite, WatchLater
 import os
 from sqlalchemy import func, or_
 
@@ -160,6 +160,49 @@ def add_favorite(content_id):
         flash('Added to favorites!', 'success')
 
     return redirect(url_for('content_detail', content_id=content_id))
+
+
+@app.route('/watchlater/<int:content_id>', methods=['POST'])
+def add_watch_later(content_id):
+    if 'user_id' not in session:
+        flash('Please login to add to Watch Later.', 'danger')
+        return redirect(url_for('login'))
+
+    exists = WatchLater.query.filter_by(
+        user_id=session['user_id'],
+        content_id=content_id
+    ).first()
+
+    if exists:
+        flash('This content is already in your Watch Later list!', 'info')
+    else:
+        new_item = WatchLater(user_id=session['user_id'], content_id=content_id)
+        db.session.add(new_item)
+        db.session.commit()
+        flash('Added to Watch Later!', 'success')
+
+    return redirect(url_for('content_detail', content_id=content_id))
+
+
+@app.route('/remove_watchlater/<int:content_id>', methods=['POST'])
+def remove_watch_later(content_id):
+    if 'user_id' not in session:
+        flash('Please login to modify Watch Later.', 'danger')
+        return redirect(url_for('login'))
+
+    item = WatchLater.query.filter_by(
+        user_id=session['user_id'],
+        content_id=content_id
+    ).first()
+    if item:
+        db.session.delete(item)
+        db.session.commit()
+        flash('Removed from Watch Later.', 'success')
+    else:
+        flash('Item not found in your Watch Later list.', 'warning')
+
+    return redirect(url_for('profile'))
+
 
 
 # Profile route
